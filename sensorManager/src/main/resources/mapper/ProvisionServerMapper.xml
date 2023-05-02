@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sensormanager.provisionserver">
+
+    <resultMap id="provisionServer" type="com.aisl.ksensor.sensormanager.provisionserver.vo.ProvisionServerBaseVO">
+        <id property="id" column="ID"/>
+        <result property="type" column="TYPE" javaType="String" jdbcType="VARCHAR"
+                typeHandler="com.aisl.ksensor.sensormanager.common.datamapperhandler.ProvisionProtocolTypeHandler"/>
+<!--        <result property="type" column="TYPE"/>-->
+        <result property="description" column="DESCRIPTION"/>
+        <result property="provisionUri" column="PROVISION_URI"/>
+<!--        <result property="provisionProtocol" column="PROVISION_PROTOCOL"/>-->
+        <result property="provisionProtocol" column="PROVISION_PROTOCOL" javaType="String" jdbcType="VARCHAR"
+                typeHandler="com.aisl.ksensor.sensormanager.common.datamapperhandler.ProvisionProtocolTypeHandler"/>
+        <result property="createDatetime" column="CREATE_DATETIME"/>
+        <result property="creatorId" column="CREATOR_ID"/>
+        <result property="modifyDatetime" column="MODIFY_DATETIME"/>
+        <result property="modifierId" column="MODIFIER_ID"/>
+    </resultMap>
+
+    <select id="selectByTypeLatest" resultMap="provisionServer" parameterType="String">
+        SELECT
+            ID,
+            TYPE,
+            DESCRIPTION,
+            PROVISION_URI,
+            PROVISION_PROTOCOL,
+            CREATE_DATETIME,
+            CREATOR_ID,
+            MODIFY_DATETIME,
+            MODIFIER_ID
+        FROM SENSOR_MANAGER.PROVISION_SERVER_BASE
+        WHERE TYPE = #{type}
+        ORDER BY CREATE_DATETIME DESC
+            LIMIT 1
+    </select>
+
+
+</mapper>

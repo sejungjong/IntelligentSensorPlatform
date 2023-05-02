@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sensormanager.sensorsetup">
+    <resultMap id="sensorSetup" type="com.aisl.ksensor.sensormanager.sensorsetup.vo.SensorSetupBaseVO">
+        <id property="id" column="ID"/>
+        <result property="sensorId" column="SENSOR_ID" javaType="java.util.ArrayList" jdbcType="ARRAY"
+                typeHandler="com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler"/>
+        <result property="name" column="NAME"/>
+        <result property="sensorType" column="SENSOR_TYPE"/>
+        <result property="description" column="DESCRIPTION"/>
+        <result property="sensorParameters" column="SENSOR_PARAMETERS" javaType="java.util.ArrayList" jdbcType="ARRAY"
+                typeHandler="com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler"/>
+        <result property="nonValueParameters" column="NON_VALUE_PARAMETERS" javaType="java.util.ArrayList" jdbcType="ARRAY"
+                typeHandler="com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler"/>
+        <result property="valueParameters" column="VALUE_PARAMETERS" javaType="java.util.ArrayList" jdbcType="ARRAY"
+                typeHandler="com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler"/>
+        <result property="discreteParameters" column="DISCRETE_PARAMETERS" javaType="java.util.ArrayList" jdbcType="ARRAY"
+                typeHandler="com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler"/>
+        <result property="continuousParameters" column="CONTINUOUS_PARAMETERS" javaType="java.util.ArrayList" jdbcType="ARRAY"
+                typeHandler="com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler"/>
+        <result property="categoricalParameters" column="CATEGORICAL_PARAMETERS" javaType="java.util.ArrayList" jdbcType="ARRAY"
+                typeHandler="com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler"/>
+        <result property="sensorDuration" column="SENSOR_DURATION"/>
+        <result property="createDatetime" column="CREATE_DATETIME"/>
+        <result property="creatorId" column="CREATOR_ID"/>
+
+<!--        <result property="provisioningRequestId" column="PROVISIONING_ID"/>-->
+<!--        <result property="provisioningEventTime" column="PROVISIONING_DATETIME"/>-->
+    </resultMap>
+
+
+    <select id="selectById" resultMap="sensorSetup"
+            parameterType="com.aisl.ksensor.sensormanager.sensorsetup.vo.SensorSetupBaseVO">
+        SELECT ID
+             , SENSOR_ID
+             , NAME
+             , SENSOR_TYPE
+             , DESCRIPTION
+             , SENSOR_PARAMETERS
+             , NON_VALUE_PARAMETERS
+             , VALUE_PARAMETERS
+             , DISCRETE_PARAMETERS
+             , CONTINUOUS_PARAMETERS
+             , CATEGORICAL_PARAMETERS
+             , SENSOR_DURATION
+             , CREATE_DATETIME
+             , CREATOR_ID
+        FROM SENSOR_MANAGER.SENSOR_SETUP_BASE
+        WHERE ID = #{id}
+        ORDER BY ID
+    </select>
+
+    <insert id="createSensorSetupBase" parameterType="com.aisl.ksensor.sensormanager.sensorsetup.vo.SensorSetupBaseVO">
+        INSERT INTO SENSOR_MANAGER.SENSOR_SETUP_BASE (
+        ID
+        ,SENSOR_ID
+        , SENSOR_PARAMETERS
+        , SENSOR_DURATION
+        <if test="description != null">
+            ,DESCRIPTION
+        </if>
+        <if test="name != null">
+            ,NAME
+        </if>
+        <if test="sensorType != null">
+            ,SENSOR_TYPE
+        </if>
+        <if test="nonValueParameters != null">
+            ,NON_VALUE_PARAMETERS
+        </if>
+        <if test="valueParameters != null">
+            ,VALUE_PARAMETERS
+        </if>
+        <if test="discreteParameters != null">
+            ,DISCRETE_PARAMETERS
+        </if>
+        <if test="continuousParameters != null">
+            ,CONTINUOUS_PARAMETERS
+        </if>
+        <if test="categoricalParameters != null">
+            ,CATEGORICAL_PARAMETERS
+        </if>
+        ,CREATE_DATETIME
+        ) VALUES (
+        #{id}
+        ,#{sensorId, typeHandler=com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler}::VARCHAR(512)[]
+        ,#{sensorParameters, typeHandler=com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler}::VARCHAR(512)[]
+        ,#{sensorDuration}
+        <if test="description != null">
+            ,#{description}
+        </if>
+        <if test="name != null">
+            ,#{name}
+        </if>
+        <if test="sensorType != null">
+            ,#{sensorType}
+        </if>
+        <if test="nonValueParameters != null">
+            ,#{nonValueParameters, typeHandler=com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler}::VARCHAR(512)[]
+        </if>
+        <if test="valueParameters != null">
+            ,#{valueParameters, typeHandler=com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler}::VARCHAR(512)[]
+        </if>
+        <if test="discreteParameters != null">
+            ,#{discreteParameters, typeHandler=com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler}::VARCHAR(512)[]
+        </if>
+        <if test="continuousParameters != null">
+            ,#{continuousParameters, typeHandler=com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler}::VARCHAR(512)[]
+        </if>
+        <if test="categoricalParameters != null">
+            ,#{categoricalParameters, typeHandler=com.aisl.ksensor.sensormanager.common.datamapperhandler.StringArrayListTypeHandler}::VARCHAR(512)[]
+        </if>
+        ,#{createDatetime}
+        )
+    </insert>
+
+
+</mapper>
