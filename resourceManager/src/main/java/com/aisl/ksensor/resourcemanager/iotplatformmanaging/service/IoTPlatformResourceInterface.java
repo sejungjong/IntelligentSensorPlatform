@@ -3,7 +3,7 @@ package com.aisl.ksensor.resourcemanager.iotplatformmanaging.service;
 
 import java.util.List;
 
-public interface IoTPlatformInterface {
+public interface IoTPlatformResourceInterface {
 
 
     public boolean createResource(String endpointUri, String resourceUri, String resourceType, String resourceValue);
